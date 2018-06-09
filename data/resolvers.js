@@ -1,34 +1,30 @@
-import { Hospital, Patient, Doctor, Document, Recipe, Message, Event } from './connectors';
+import { Hospital, Patient, Doctor, Document, Recipe, Message, Event } from './connectors/index';
 
 const resolvers = {
 	Query: {
-		// author(_, args) {
-		// 	return Author.find({ where: args });
-		// },
-		doctor(_, args) {
-			return Doctor.find({ id: args.id });
+		doctor: async(parent, {id}) => {
+			const a = await Doctor.findOne({_id: id});
+			console.log(a);
+			return a
 		},
-		allDoctors(_, args) {
-			return Doctor.find({});
+		allDoctors: async (parent, args) => await Doctor.find(),
+		allPatients: async(parent, args) => await Patient.find(),
+		allHospitals: async(parent, args) => await Hospital.find(),
+		authenticateDoctor: async(_, {email, password}) => {
+			const doctor = await Doctor.findOne({email, password});
+			console.log(doctor);
+			return doctor;
 		}
-		// allAuthors(_, args) {
-		// 	return Author.findAll();
-		// }
 	},
-	// Author: {
-	// 	posts(author) {
-	// 		return author.getPosts();
-	// 	}
-	// },
-	// Post: {
-	// 	author(post) {
-	// 		return post.getAuthor();
-	// 	},
-	// 	views(post) {
-	// 		return View.findOne({ postId: post.id })
-	// 			.then((view) => view.views);
-	// 	},
-	// },
+	Mutation: {
+		newDoctor: async(parent, args) => {
+			const doctor = new Doctor(args);
+			doctor.phoneNumbers = [args.phone];
+			const res = await doctor.save();
+			console.log(res);
+			return res;
+		}
+	}
 };
 
 export default resolvers;

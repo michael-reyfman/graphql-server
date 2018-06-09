@@ -53,7 +53,8 @@ type Event {
 type Document {
 	_id: String!,
 	title: String,
-	url: String!,
+	url: String,
+	content: String,
 	doctorId: String!,
 	patientId: String!
 }
@@ -70,13 +71,31 @@ type Recipe {
 type Message {
 	_id: String!,
 	text: String,
+	url: String,
 	sender: String!,
 	doctorId: String!,
 	patientId: String!
 }
 type Query {
   doctor(id: String): Doctor,
-  allDoctors: [Doctor]
+  allDoctors: [Doctor],
+  allPatients: [Patient],
+  allHospitals: [Hospital],
+  authenticateDoctor(email: String, password: String): Doctor
+}
+type Mutation {
+	newDoctor(
+		firstName: String!,
+		lastName: String!,
+		patronymic: String!,
+		email: String!,
+		password: String!,
+		phone: String!,
+		hospital: String!,
+		gender: String,
+		dateOfBirth: String,
+		description: String
+		): Doctor! 
 }
 `;
 
