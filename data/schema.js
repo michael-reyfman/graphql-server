@@ -95,7 +95,19 @@ type Mutation {
 		gender: String,
 		dateOfBirth: String,
 		description: String
-		): Doctor! 
+		): Doctor!
+	newPatient(
+		firstName: String!,
+		lastName: String!,
+		patronymic: String!,
+		email: String!,
+		password: String!,
+		phone: String!,
+		doctorId: String!,
+		gender: String,
+		dateOfBirth: String,
+		description: String
+	): Patient!
 }
 `;
 
