@@ -72,7 +72,7 @@ type Message {
 	_id: String!,
 	text: String,
 	url: String,
-	sender: String!,
+	senderId: String!,
 	doctorId: String!,
 	patientId: String!
 }
@@ -108,6 +108,12 @@ type Mutation {
 		dateOfBirth: String,
 		description: String
 	): Patient!
+	newMessage(
+		senderId: String!,
+		doctorId: String!,
+		patientId: String!,
+		text: String!
+	) : Message!
 }
 `;
 

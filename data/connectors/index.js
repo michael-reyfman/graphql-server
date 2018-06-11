@@ -78,9 +78,10 @@ const RecipeSchema = Mongoose.Schema({
 
 const MessageSchema = Mongoose.Schema({
 	text: String,
-	sender: { type: String, enum: ['doctor', 'patient']},
+	senderId: String,
 	doctorId: { type: String, ref: 'doctors' },
-	patientId: { type: String, ref: 'patients' }
+	patientId: { type: String, ref: 'patients' },
+	timestamp: { type: Date, default: Date.now() },
 });
 
 const Hospital = Mongoose.model('hospitals', HospitalSchema);

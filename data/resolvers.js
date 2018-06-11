@@ -10,6 +10,10 @@ const resolvers = {
 				});
 				doctor.patients = pts;
 			}
+			const events = await Event.find({
+				doctorId: doctor._id
+			});
+			doctor.events = events;
 			return doctor;
 		},
 		allDoctors: async (parent, args) => await Doctor.find(),
@@ -41,16 +45,16 @@ const resolvers = {
 			const credentials = args;
 			const patient = await new Patient(credentials);
 			patient.phoneNumbers = [credentials.phone];
-			console.log('PATIENT');
-			console.log(patient._id);
 			const _p = patient.save();
 			const doctor = await Doctor.findById(doctorId);
 			doctor.patients = doctor.patients.concat([patient._id]);
 			const res = await doctor.save();
-			console.log('DOCTOR AFTER');
-			console.log(res);
 			return res;
-		}
+		},
+		newMessage: async(parent, args) => await new Message(args).save(),
+		// newEvent: async(parent, args) => await new Event(args).save(),
+		// newDocument: async(parent, args) => await new Document(args).save(),
+		// newRecipe: async(parent, args) => await new Recipe(args).save(),
 	}
 };
 
